@@ -1,0 +1,73 @@
+#!/bin/bash
+
+#####################################################################################################
+#
+# The Glimpses Toolkit
+# Copyright (c) 2008,2009 Jaswanth Sreeram, Ashwini Bhagwat, Sarang Ozarde
+# All rights reserved
+#
+# profile-mpeg2dec: A script that does the profiling for the Workload "mpeg2dec"[Workloads/mpeg2dec]
+# 
+#####################################################################################################
+
+#Paths for input and output files
+SCRIPT_DIR=$(pwd)
+BENCH_DIR=${SCRIPT_DIR}/Workloads/mpeg2dec
+OUTPUT_DIR=${SCRIPT_DIR}/Output/mpeg2dec_O;
+PIN_DIR=${SCRIPT_DIR}/../pin
+PIN_TOOL_DIR=${PIN_DIR}/source/tools/SimpleExamples
+FILE_LIST="${BENCH_DIR}/display.c ${BENCH_DIR}/gethdr.c ${BENCH_DIR}/idct.c ${BENCH_DIR}/mpeg2dec.c ${BENCH_DIR}/store.c ${BENCH_DIR}/verify.c ${BENCH_DIR}/getbits.c ${BENCH_DIR}/getpic.c ${BENCH_DIR}/idctref.c ${BENCH_DIR}/recon.c ${BENCH_DIR}/subspic.c ${BENCH_DIR}/getblk.c ${BENCH_DIR}/getvlc.c ${BENCH_DIR}/motion.c ${BENCH_DIR}/spatscal.c ${BENCH_DIR}/systems.c"
+OBJ_LIST="display.o gethdr.o idct.o mpeg2dec.o store.o verify.o getbits.o getpic.o idctref.o recon.o subspic.o getblk.o getvlc.o motion.o spatscal.o systems.o"
+
+#Application binary
+APP="${BENCH_DIR}/mpeg2dec -b ${BENCH_DIR}/data/mei16v2.m2v -r -f o0 ${BENCH_DIR}/data/tmp"
+
+echo "Profiling Started"
+date
+
+export LD_BIND_NOW=1
+#Remove old Profiling Info
+rm -rf ${OUTPUT_DIR}
+
+#create the temporary files
+cd ${PIN_TOOL_DIR}
+rm -rf temp
+mkdir temp
+cd temp
+mkdir CFGs
+mkdir LoadsProfile
+cd ..
+
+# Running PIN
+#${PIN_DIR}/pin -t obj-ia32/calltrace.so -- ${APP}
+${PIN_DIR}/pin -t obj-intel64/calltrace.so -- ${APP}
+
+#Create new Profiling Folders
+mkdir ${OUTPUT_DIR} 
+
+# Copy output to Workload output folder
+cd temp
+cp -rf ./* ${OUTPUT_DIR}
+cd ..
+
+# removing temporary files
+rm -rf temp
+
+for file in ${OUTPUT_DIR}/CFGs/*dot; do
+dot -Tps $file -O;
+done
+
+#if source available then do provision to show source file
+gcc -g -c ${FILE_LIST}
+nm -n -l -S ${OBJ_LIST} | grep " [T|t] " > ${OUTPUT_DIR}/nm.dump
+
+rm ${OBJ_LIST}
+
+echo ""
+date
+echo "Profiling Done Successfully" 
+sleep 1000
+
+
+
+

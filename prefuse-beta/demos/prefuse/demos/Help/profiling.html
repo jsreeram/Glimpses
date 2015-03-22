@@ -1,0 +1,32 @@
+<html>
+<head> 
+<title>Profiling</title>
+</head>
+<body>
+<center><h2>Profiling</h2></center>
+
+<br/>
+<br/>Change directory to Glimpses-0.92/WorkBench. 
+<br/>Scripts named profile-* are the scripts used to generate profiles. 
+<br/>When run,they do all of the following, automatically:
+
+<ul>
+	
+<li>   Compile the programs with the base compiler.
+<li>   Apply bytecode instrumentation pass.
+<li>   Run the program to generate raw profiles.
+<li>   Run parsers on the raw profiles to generate final profiles in GraphML
+     format.
+
+<br/> For example, to profile the mpeg2dec applicaitons, type
+
+<br/> ./profile-mpeg2dec
+
+<br/>At the end of the profiling process, a folder is created, which contains
+the results of the profiling and files required for the visualization of 
+the same. For example, once mpeg2dec is run, a folder called
+mpeg2dec_O is created under Glimpses-0.92/WorkBench.
+
+</body>
+</html>
+

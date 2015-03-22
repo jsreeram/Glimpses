@@ -1,0 +1,58 @@
+9
+
+dir
+28470
+svn://svn.mplayerhq.hu/mplayer/trunk/DOCS/man
+svn://svn.mplayerhq.hu/mplayer
+
+
+
+2009-02-05T19:45:13.015041Z
+28470
+gpoirier
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+b3059339-0415-0410-9bf9-f77b7e298cf2
+
+zh_CN
+dir
+
+en
+dir
+
+cs
+dir
+
+ru
+dir
+
+es
+dir
+
+fr
+dir
+
+de
+dir
+
+pl
+dir
+
+hu
+dir
+
+it
+dir
+

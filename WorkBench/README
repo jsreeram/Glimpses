@@ -1,0 +1,23 @@
+================================================
+Glimpses Toolkit- WorkBench
+README
+================================================
+
+This directory is where one can profile applications
+and generate traces.
+
+To profile applications, all one needs to do is to
+create a driver script like the ones in this 
+directory called profile-test (for profiling the
+test application) and profile-mpeg2dec (for profiling
+the mpeg2decode application). The user has to modify the
+path variablesand the APP variable at the top of the script file 
+APP variable needs to be set to the full path to 
+application binary and its command line paramters, if any.
+
+Then, run the script. This should generate a folder 
+workload_O (Eg. test_O) containing files required to 
+visualize the results of the profiling. To visualize 
+the results, run the glimpses executable in the 
+toplevel directory 
+

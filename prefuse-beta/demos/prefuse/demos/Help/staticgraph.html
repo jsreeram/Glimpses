@@ -1,0 +1,68 @@
+<html>
+<head><title>Static Call Graph </title></head>
+<body>
+<center><h2>Static Call Graph </h2></center>
+<br/> This graph consists of all functions that are defined in the workload, one node
+   per function. If the function was called during the profile run, it is colored green, 
+   and red otherwise. 
+
+
+<br/>The following actions can be done on both tabs
+<ul>
+       <li> Right click to fit the entire graph in the window
+       <li> Use the scroll wheel to zoom in into the graph
+       <li> Click on function nodes and drag them to move the whole graph.
+       <li> Click on an empty area in this pane and drag to move the entire graph.
+
+</ul>
+<br/>
+  For example, if we have a workload consisting of functions as follows
+ 
+<br/>
+<br/>  A()
+<br/> {
+<br/>       cout<<"In A";
+<br/>  }  
+<br/>  B(int x) 
+<br/>  {
+<br/>       if(x==5)
+<br/>  {
+<br/>	  A();
+<br/>       }
+<br/>  }	
+<br/>
+<br/>  int main()
+<br/>  {
+<br/>       B(5);
+<br/>      B(0);
+<br/>  }
+
+<br/>  For the above function:
+<br/>  The dynamic call graph 
+<br/>		
+<br/>      main.0--> B.1 -->A.2
+<br/>	    |
+<br/> 	    V	
+<br/>	   B.3                    ---> the suffixes indicate the sequence of calls, and we notice that 
+<br/>				    B.1 is distinguised from B.3	
+ 
+<br/>   The static call graph would be
+
+<br/>      main--> B --> A		---> one node for each function, without separating calling contexts.
+				    since all functions were called atleast once in the profile run, they
+				    would all be colored green.
+
+  
+
+<br/>   Actions allowed in the Static Call graph:
+<ul>
+     <li> Hover over a node to see update information in the Function properties panel
+       (Function Characteristics, Alias Analysis)
+      <li> Keep Ctrl keep depressed and click on multiple nodes. The function characteristics panel will 
+       update to show the aggregate information. This is intended to give the programmer an estimate
+       of the effect of placing all these functions on a single SPU
+     <li>Right click on a node and choose any of the actions in the context menu - view cfg/ callers/callees
+       - If the first option is chosen, i.e "View Function CFG", the Control Flow Graph of the selected 
+</ul>
+</body>
+</html>

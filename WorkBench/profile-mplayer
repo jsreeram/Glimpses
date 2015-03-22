@@ -1,0 +1,69 @@
+#!/bin/bash -l
+
+
+#####################################################################################################
+#
+# The Glimpses Toolkit
+# Copyright (c) 2008,2009 Jaswanth Sreeram, Ashwini Bhagwat, Sarang Ozarde
+# All rights reserved
+#
+# profile-mplayer: A script that does the profiling for the Workload "mplayer"[Workloads/mplayer]
+# 
+#####################################################################################################
+
+#Paths for input and output files
+SCRIPT_DIR=$(pwd)
+BENCH_DIR=${SCRIPT_DIR}/Workloads/mplayer
+OUTPUT_DIR=${SCRIPT_DIR}/Output/mplayer_O;
+PIN_DIR=${SCRIPT_DIR}/../pin
+PIN_TOOL_DIR=${PIN_DIR}/source/tools/SimpleExamples
+
+#Application binary
+APP="${BENCH_DIR}/mplayer  -vo null ${BENCH_DIR}/SampleFiles/animation.avi"
+
+echo "Profiling Started"
+date
+
+export LD_BIND_NOW=1
+
+#Remove old Profiling Info
+rm -rf ${OUTPUT_DIR}
+
+#create the temporary files
+cd ${PIN_TOOL_DIR}
+rm -rf temp
+mkdir temp 
+cd temp
+mkdir CFGs
+mkdir LoadsProfile
+cd ..
+
+# Running PIN
+
+#${PIN_DIR}/pin -t obj-ia32/calltrace.so -- ${APP}
+${PIN_DIR}/pin -t obj-intel64/calltrace.so -- ${APP}
+
+#Create new Profiling Folders
+mkdir ${OUTPUT_DIR} 
+
+# Copy output to Workload output folder
+cd temp
+cp -rf ./* ${OUTPUT_DIR}
+cd ..
+
+# removing temporary files
+#rm -rf temp
+
+for file in ${OUTPUT_DIR}/CFGs/*dot; do
+dot -Tps $file -O;
+done
+
+#if source available then do provision to show source file
+#gcc -g -c ${BENCH_DIR}/h.c
+#nm -n -l -S h.o | grep " [T|t]" > ${OUTPUT_DIR}/nm.dump
+
+echo ""
+date
+echo "Profiling Done Successfully" 
+sleep 1
+
