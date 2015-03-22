@@ -1,10 +1,9 @@
-==============================================================
-The GLIMPSES toolkit
+##The GLIMPSES toolkit
 Version 1.0
 README
 
-Developed by Jaswanth Sreeram, Ashwini Bhagwat, Sarang Ozarde
-==============================================================
+#### Developed by Jaswanth Sreeram, Ashwini Bhagwat, Sarang Ozarde
+
 
 ------
 Index
@@ -39,7 +38,7 @@ http://sourceforge.net/projects/glimpses.
 ----------------------
 The top level GLIMPSES directory contains the following sub-directories:
 
-pin/      : This contains the PIN distribution.
+pin/      : This contains the PIN distribution. Note that pin is not distributed with this package, you will need to [download](https://software.intel.com/en-us/articles/pin-a-dynamic-binary-instrumentation-tool) it for your architecture yourself.
 
 prefuse-beta/ : This contains the prefuse distribution.
 
@@ -119,5 +118,3 @@ mpeg2dec_O is created under glimpses/WorkBench/Output.
 
 
 More information and help is provided in the Help section in the Visualization UI 
-
-	* * * * *
